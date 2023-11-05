@@ -1,0 +1,33 @@
+@font-face {
+    font-family: 'ProtoMono';
+    font-style: normal;
+    font-weight: 300;
+    src: url('/fonts/protoMono/ProtoMono-Light.woff') format('woff'),
+}
+
+@font-face {
+    font-family: 'ProtoMono';
+    font-style: normal;
+    font-weight: 400;
+    src: url('/fonts/protoMono/ProtoMono-Regular.woff') format('woff'),
+}
+
+@font-face {
+    font-family: 'ProtoMono';
+    font-style: normal;
+    font-weight: 500;
+    src: url('/fonts/protoMono/ProtoMono-Medium.woff') format('woff'),
+}
+
+@font-face {
+    font-family: 'ProtoMono';
+    font-style: normal;
+    font-weight: 600;
+    src: url('/fonts/protoMono/ProtoMono-SemiBold.woff') format('woff'),
+}
+
+body {
+    font-family: "ProtoMono";
+    font-weight: 500;
+    letter-spacing: -0.1em;
+}
