@@ -1,5 +1,8 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
+	import { fade, slide } from 'svelte/transition';
+	import { quintOut } from 'svelte/easing';
+
 	import { VERTEX_SHADER, FRAGMENT_SHADER } from './shaders';
 	import { Renderer, Program, Color, Mesh, Triangle, Vec2, Vec3 } from 'ogl';
 	import seedrandom from 'seedrandom';
@@ -86,9 +89,14 @@
 
 
 <div bind:this={container} class="container">
-	<h1 class="default-heading">Complex Numbers</h1>
+	<h1 
+        transition:fade={{ duration: 3000, easing: quintOut }} 
+        class="default-heading"
+    >
+        Complex Numbers
+    </h1>
 	<p>
-		Thanks to: 
+		Thanks to:
 		<a href="https://hturan.com/writing/complex-numbers-glsl" rel="noreferrer" target="_parent">
 			Harley Turan
 		</a>

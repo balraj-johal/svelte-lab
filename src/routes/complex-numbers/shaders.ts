@@ -42,7 +42,7 @@ void main() {
     // vec2 q = uPoint2;
       
     // spin points
-    float angle = uTime / 5.0 * PI;
+    float angle = uTime / 15.0 * PI;
     float c = cos(angle);
     float s = sin(angle);  
     vec2 p = vec2( s * uLength, c * uLength );

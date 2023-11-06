@@ -1,3 +1,6 @@
-<h1>Homepage</h1>
-<p>Visit <a href="/grid">grid</a> to grid</p>
-<p>Visit <a href="/ogl">ogl</a> to see ogl experiments</p>
+<div>
+    <h1>LAB</h1>
+    <p><a href="/grid">grid</a></p>
+    <p><a href="/ogl">ogl</a></p>
+    <p><a href="/complex-numbers">complex-numbers</a></p>
+</div>
