@@ -52,15 +52,12 @@
 			position: absolute;
 			bottom: 1rem;
 			left: 1rem;
-
 			margin: 0;
-			color: white;
-			mix-blend-mode: difference;
 		}
 	}
 </style>
 
 
 <div bind:this={container} class="container">
-	<h1>This the grid route</h1>
+	<h1 class="default-heading">Simple OGL Scene</h1>
 </div>

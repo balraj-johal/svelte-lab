@@ -31,3 +31,11 @@ body {
     font-weight: 500;
     letter-spacing: -0.1em;
 }
+
+.default-heading {
+    color: white;
+    text-transform: uppercase;
+    mix-blend-mode: difference;
+
+    font-size: 3rem;
+}
