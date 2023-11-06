@@ -20,6 +20,13 @@
 		const gl = renderer.gl;
 		container.appendChild(gl.canvas);
 
+        // allow wide gamut color
+        const glContext = gl.canvas.getContext('webgl2');
+        if (!!glContext && `drawingBufferColorSpace` in glContext) {
+            glContext.drawingBufferColorSpace = 'display-p3';
+            console.log('P3 space supported!');
+        }
+
 		// setup predictable RNG
 		const prng = seedrandom(seed);
 		
