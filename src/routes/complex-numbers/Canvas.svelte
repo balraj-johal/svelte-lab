@@ -86,11 +86,20 @@
 
 <style lang="scss">
 	.container {
-		h1 {
+		h1, p {
 			position: absolute;
-			bottom: 1rem;
-			left: 1rem;
+			bottom: 2rem;
+
+            margin-block: 0;
 		}
+
+        h1 {
+			left: 1rem;
+        }
+
+        p {
+            right: 1rem;
+        }
 	}
 </style>
 
