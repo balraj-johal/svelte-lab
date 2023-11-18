@@ -42,9 +42,11 @@
 
 		// setup resize handlers
 		const handleResize = () => {
-			renderer.setSize(window.innerWidth, window.innerHeight);
-			uRes.value.x = window.innerWidth;
-			uRes.value.y = window.innerHeight;
+			const height = window.innerHeight;
+			const width = document.body.clientWidth;
+			renderer.setSize(width, height);
+			uRes.value.x = width;
+			uRes.value.y = height;
 		}
 		window.addEventListener("resize", handleResize);
 		handleResize();
@@ -86,38 +88,53 @@
 
 <style lang="scss">
 	.container {
+		overflow: clip;
+	}
+
+	.ui {
+		position: absolute;
+		width: 100%;
+		height: 100%;
+
+		display: flex;
+		flex-direction: column;
+		justify-content: flex-end;
+		gap: 0.5rem;
+
+		padding: 2rem 1rem;
+		
 		h1, p {
-			position: absolute;
-			bottom: 2rem;
 
             margin-block: 0;
 		}
 
-        h1 {
-			left: 1rem;
-        }
-
-        p {
-            right: 1rem;
-        }
+		.back-link {
+			position: absolute;
+			inset: 2rem;
+		}
 	}
 </style>
 
 
 <div bind:this={container} class="container">
-	<h1 
-        transition:fade={{ duration: 3000, easing: quintOut }} 
-        class="default-heading"
-    >
-        Complex Numbers
-    </h1>
-	<p>
-		Thanks to:
-		<a href="https://hturan.com/writing/complex-numbers-glsl" rel="noreferrer" target="_parent">
-			Harley Turan
+	<section class="ui">
+		<a class="back-link" href={`${url}/`} rel="noreferrer" target="_parent">
+			BACK
 		</a>
-		<a href={`${url}/complex-numbers/${nextSeed}`} rel="noreferrer" target="_parent">
-			RANDOM
-		</a>
-	</p>
+		<h1 
+			transition:fade={{ duration: 3000, easing: quintOut }} 
+			class="default-heading"
+		>
+			Complex Numbers
+		</h1>
+		<p>
+			Thanks to:
+			<a href="https://hturan.com/writing/complex-numbers-glsl" rel="noreferrer" target="_parent">
+				Harley Turan
+			</a>
+			<a href={`${url}/complex-numbers/${nextSeed}`} rel="noreferrer" target="_parent">
+				RANDOM
+			</a>
+		</p>
+	</section>
 </div>
