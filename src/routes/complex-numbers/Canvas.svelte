@@ -38,7 +38,7 @@
 		const uPaletteInput2 = { value: new Vec3(prng.quick(), prng.quick(), prng.quick()) };
 		const uPaletteInput3 = { value: new Vec3(prng.quick(), prng.quick(), prng.quick()) };
 		const uPaletteInput4 = { value: new Vec3(prng.quick(), prng.quick(), prng.quick()) };
-		const uLength = { value: (prng.quick() + 1) / 2 };
+		const uLength = { value: (prng.quick() + 1) / 4 };
 
 		// setup resize handlers
 		const handleResize = () => {
@@ -111,6 +111,8 @@
 		.back-link {
 			position: absolute;
 			inset: 2rem;
+			height: fit-content;
+			width: fit-content;
 		}
 	}
 </style>
