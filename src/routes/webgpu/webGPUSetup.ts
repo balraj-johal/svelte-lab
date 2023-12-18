@@ -25,17 +25,13 @@ const getDevice = async (adapter: any) => {
 }
 
 const getContext = (canvas: HTMLCanvasElement, device: any) => {
-    try {
-        const context = canvas.getContext("webgpu");
-        const canvasFormat = navigator.gpu.getPreferredCanvasFormat();
-        context.configure({
-            device: device,
-            format: canvasFormat,
-        });
-        return context;
-    } catch (error) {
-        console.error(error);
-    }
+    const context = canvas.getContext("webgpu");
+    const canvasFormat = navigator.gpu.getPreferredCanvasFormat();
+    context?.configure({
+        device: device,
+        format: canvasFormat,
+    });
+    return {context, canvasFormat};
 }
 
 const getEncoder = (device: any) => {
@@ -50,11 +46,11 @@ export const setup = async (canvas: HTMLCanvasElement) => {
     const adapter = await getAdapter();
     /** "The main interface through which most interaction with the GPU happens" */
     const device = await getDevice(adapter);
-    const context = getContext(canvas, device);
+    const {context, canvasFormat} = getContext(canvas, device);
     /** Web GPU command encoder. Used to trigger render passes and send info to the GPU */
     const encoder = getEncoder(device);
 
     return {
-        supported, adapter, device, context, encoder
+        supported, adapter, device, context, encoder, canvasFormat
     }
 }
