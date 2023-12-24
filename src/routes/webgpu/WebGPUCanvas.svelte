@@ -3,8 +3,11 @@
 	import { setup } from './webGPUSetup';
 	import { CELL_SHADER } from './shaders';
 	import { preloadData } from '$app/navigation';
+	import { dev } from '$app/environment';
 
 	let canvas: HTMLCanvasElement;
+
+	const GRID_SIZE = 4;
 
 	onMount(async () => {
 		const { device, encoder, context, canvasFormat } = await setup(canvas);
@@ -33,13 +36,13 @@
 			}],
 		};
 
-		const shaderModule = device.createShaderModule({
+		const shaderModule: GPUShaderModule = device.createShaderModule({
 			label: "cell shader",
 			code: CELL_SHADER
 		});
 
 		/** Defines how geometry is drawn. I barely understand this. */
-		const renderPipeline = device.createRenderPipeline({
+		const renderPipeline: GPURenderPipeline = device.createRenderPipeline({
 			label: "cell pipeline",
 			// layout describes inputs other than buffers required
 			layout: "auto",
@@ -72,7 +75,7 @@
 		 *  but we can change the contents of the buffer memory.
 		 * 
 		 * The buffer memory is intially set to 0. */
-		const vertexBuffer = device.createBuffer({
+		const vertexBuffer: GPUBuffer = device.createBuffer({
 			// debug name
 			label: "Cell vertices",
 			// define mem usage
@@ -85,9 +88,38 @@
 		// This copies the contents of the TypedArray into the vertex buffer on the device.
 		device.queue.writeBuffer(vertexBuffer, /*bufferOffset=*/ 0, quadVertices);
 
-		// time to DRAW
+		// --- BIND UNIFORMS
+		const uniformArray = new Float32Array([GRID_SIZE, GRID_SIZE]);
+		const uniformBuffer: GPUBuffer = device.createBuffer({
+			label: "Grid Uniforms",
+			size: uniformArray.byteLength,
+			// GPUBufferUsage flags, former marks this as uniform data,
+			// the latter flag allows us to copy data into it
+			usage: GPUBufferUsage.UNIFORM | GPUBufferUsage.COPY_DST,
+		})
+		device.queue.writeBuffer(uniformBuffer, /*bufferOffset=*/ 0, uniformArray);
+
+		// TODO: ensure below comment is valid
+		// bind group describes the connection between shader stuff and extra input buffers
+		const bindGroup: GPUBindGroup = device.createBindGroup({
+			label: "Cell renderer bind group",
+			// bind group layout 0 corresponds to @group(0) in shader
+			layout: renderPipeline.getBindGroupLayout(0),
+			entries: [{
+				binding: 0,
+				resource: {
+					buffer: uniformBuffer
+				}
+			}]
+		})
+
+		// --- EXECUTE RENDER PASS
 		renderPass.setPipeline(renderPipeline);
 		renderPass.setVertexBuffer(0, vertexBuffer);
+
+		// declaring 'that each @binding that's part of @group(0) uses the resources in this bind group'
+		renderPass.setBindGroup(0, bindGroup);
+
 		// tell it to draw the number of rendered verts
 		// this here is the length of the vert array / 2, as each vert is a vec2
 		renderPass.draw(quadVertices.length / 2);
@@ -99,7 +131,6 @@
 		const commandBuffer = encoder.finish();
 		// add the command buffer to the GPU Device's execution queue
 		device.queue.submit([commandBuffer]);
-		
 
 })
 </script>
